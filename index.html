@@ -548,9 +548,9 @@
     }
 
     // ── Countdown ──
-    // ⚠️ TEST: TARGET a 5 minutos desde ahora
-    // Para producción: reemplazar por → new Date('2026-07-09T00:00:00')
-    const TARGET = new Date(Date.now() + 5 * 60 * 1000);
+    // 9 de julio 2026 · 00:00:00 hora Ecuador (UTC-5) = 05:00:00 UTC
+    
+    const TARGET = new Date('2026-07-09T05:00:00Z');
 
     function pad(n) { return String(n).padStart(2,'0'); }
 
