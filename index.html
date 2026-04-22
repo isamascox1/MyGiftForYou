@@ -1,229 +1,502 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Feliz Cumpleaños ✨</title>
+  <title>Pronto... 🌸</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>"/>
-  <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --rose:      #d4a5a5;
+      --rose-deep: #b07878;
+      --gold:      #c9a96e;
+      --gold-light:#f0dfc0;
+      --cream:     #fdf8f2;
+      --text-dark: #2c1f1f;
+      --text-mid:  #6b4f4f;
+      --text-soft: #a08080;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 20%, #f9eee8 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 80% 80%, #f0dfc0 0%, transparent 60%),
+        linear-gradient(160deg, #fdf6f0 0%, #fdf0f5 50%, #f5ece0 100%);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ── Canvas partículas ── */
+    #canvas-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ── Pétalos ── */
+    #petals {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .petal {
+      position: absolute;
+      top: -60px;
+      animation: petalFall linear infinite;
+      opacity: 0;
+    }
+    @keyframes petalFall {
+      0%   { transform: translateY(0) rotate(0deg) scale(1);   opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(110vh) rotate(540deg) scale(0.5); opacity: 0; }
+    }
+
+    /* ── Anillos decorativos ── */
+    .ring {
+      position: fixed;
+      border-radius: 50%;
+      border: 1px solid rgba(212,165,165,0.25);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .ring-a { width:600px; height:600px; top:-200px; right:-200px; animation: ringDrift 9s ease-in-out infinite; }
+    .ring-b { width:380px; height:380px; bottom:-120px; left:-100px; animation: ringDrift 7s ease-in-out 1s infinite reverse; }
+    @keyframes ringDrift {
+      0%,100% { transform: translate(0,0); }
+      50%      { transform: translate(18px,-18px); }
+    }
+
+    /* ── Overlay de transición ── */
+    #transition-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0;
+    }
+    #transition-overlay .petal-burst {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #transition-overlay .burst-emoji {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0;
+      animation: burstOut 1.2s ease forwards;
+    }
+    @keyframes burstOut {
+      0%   { transform: translate(0,0) scale(0.2); opacity: 1; }
+      80%  { opacity: 0.8; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(1.5); opacity: 0; }
+    }
+    #transition-overlay .cover {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #fdf0f5, #f5ece0, #fdf6f0);
+      opacity: 0;
+      animation: coverIn 0.9s ease 0.8s forwards;
+    }
+    @keyframes coverIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    #transition-overlay .cover-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      opacity: 0;
+      animation: coverIn 0.6s ease 1.3s forwards;
+    }
+    .cover-text p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      color: var(--rose-deep);
+    }
+    .cover-text span {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    /* ── Contenido central ── */
+    .center {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 1.2rem 1.5rem;
+      max-width: 680px;
+      width: 100%;
+    }
+
+    /* Ornamento superior */
+    .ornament {
+      font-size: 0.7rem;
+      letter-spacing: 0.5rem;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      animation: fadeUp 1s ease 0.3s both;
+    }
+
+    /* Frase introductoria */
+    .intro-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--text-mid);
+      line-height: 1.75;
+      margin-bottom: 1.6rem;
+      animation: fadeUp 1s ease 0.6s both;
+    }
+    .intro-text em { color: var(--rose-deep); }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+      animation: fadeUp 1s ease 0.9s both;
+    }
+    .divider .line { display:block; width:55px; height:1px; background:var(--gold); }
+    .divider .gem  { color:var(--gold); font-size:0.55rem; }
+
+    /* Contador */
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: clamp(0.4rem, 2vw, 1rem);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 1s ease 1s both;
+      flex-wrap: nowrap;
+    }
+
+    .unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .unit-box {
+      background: white;
+      border: 1px solid rgba(212,165,165,0.4);
+      border-radius: 10px;
+      padding: 0.55rem 0.6rem;
+      min-width: clamp(54px, 18vw, 80px);
+      box-shadow: 0 6px 20px rgba(180,120,100,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .unit-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(255,255,255,0.8) 0%, rgba(245,230,220,0.3) 100%);
+    }
+
+    .unit-num {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 5.5vw, 2.6rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+    }
+    .unit-num.tick {
+      animation: numTick 0.25s cubic-bezier(0.175,0.885,0.32,1.275);
+    }
+    @keyframes numTick {
+      0%   { transform: translateY(-6px); opacity: 0.4; }
+      100% { transform: translateY(0);    opacity: 1; }
+    }
+
+    .unit-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    /* Separador : */
+    .sep {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      color: var(--rose);
+      align-self: flex-start;
+      padding-top: 0.5rem;
+      animation: sepPulse 1s ease-in-out infinite;
+    }
+    @keyframes sepPulse {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.25; }
+    }
+
+    /* Fecha destino */
+    .target-date {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      animation: fadeUp 1s ease 1.2s both;
+    }
+    .target-date span { color: var(--rose-deep); }
+
+    /* Mensaje cuando llega el día */
+    .arrived-msg {
+      display: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--rose-deep);
+      animation: fadeUp 0.8s ease both;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Footer mínimo */
+    .page-footer {
+      position: fixed;
+      bottom: 1rem;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: var(--text-soft);
+      z-index: 2;
+    }
+
+    /* ── Responsive celular ── */
+    @media (max-height: 700px) {
+      .ornament      { margin-bottom: 0.8rem; }
+      .intro-text    { margin-bottom: 1rem; font-size: 0.95rem; line-height: 1.6; }
+      .divider       { margin-bottom: 1rem; }
+      .countdown-grid{ margin-bottom: 1rem; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- PARTÍCULAS DE FONDO -->
-  <canvas id="particles"></canvas>
+  <canvas id="canvas-bg"></canvas>
+  <div id="petals"></div>
+  <div class="ring ring-a"></div>
+  <div class="ring ring-b"></div>
 
-  <!-- ===== HERO SECTION ===== -->
-  <section class="hero">
-    <div class="petals-container" id="petals"></div>
-    <div class="hero-content">
-      <div class="hero-badge reveal">28</div>
-      <h1 class="hero-title reveal">
-        <span class="italic-line">Feliz</span>
-        <span class="bold-line">Cumpleaños</span>
-      </h1>
-      <p class="hero-subtitle reveal">Para la mujer más especial de mi universo</p>
-      <div class="hero-divider reveal">
-        <span class="line"></span>
-        <span class="diamond">◆</span>
-        <span class="line"></span>
+  <!-- Overlay de transición animada -->
+  <div id="transition-overlay">
+    <div class="petal-burst" id="petalBurst"></div>
+    <div class="cover"></div>
+    <div class="cover-text">
+      <p>¡Llegó tu día, Samantha! 🌸</p>
+      <span>abriendo tu sorpresa</span>
+    </div>
+  </div>
+
+  <div class="center">
+    <p class="ornament">✦ &nbsp; &nbsp; ✦ &nbsp; &nbsp; ✦</p>
+
+    <p class="intro-text">
+      Hay cosas que se preparan con calma,<br/>
+      con cuidado, con <em>amor</em>.<br/>
+      Esta es una de ellas.<br/>
+      Espera un poco más… vale la pena.
+    </p>
+
+    <div class="divider">
+      <span class="line"></span>
+      <span class="gem">◆</span>
+      <span class="line"></span>
+    </div>
+
+    <div class="countdown-grid" id="countdownGrid">
+      <div class="unit">
+        <div class="unit-box"><div class="unit-num" id="cd-days">--</div></div>
+        <span class="unit-label">Días</span>
       </div>
-      <p class="hero-date reveal">16 · Abril · 2026</p>
-    </div>
-    <div class="scroll-hint">
-      <span>Desplázate para descubrir</span>
-      <div class="scroll-arrow"></div>
-    </div>
-  </section>
-
-  <!-- ===== DEDICATORIA SECTION ===== -->
-  <section class="dedicatoria" id="dedicatoria">
-    <div class="deco-ring ring-1"></div>
-    <div class="deco-ring ring-2"></div>
-    <div class="section-inner">
-      <div class="label-tag">Para ti</div>
-      <h2 class="section-title">Una carta desde mi corazón</h2>
-      <div class="carta-wrapper">
-        <div class="carta">
-          <p class="carta-text">
-            Hay personas que llegan a tu vida como lo hace la luz del amanecer: suavemente, sin avisar, 
-            tiñendo de dorado todo lo que tocan. <em>Tú eres esa luz para mí.</em>
-          </p>
-          <p class="carta-text">
-            Hoy, en este día tan especial, quiero que sepas que cada sonrisa tuya ha sido un regalo, 
-            cada palabra tuya un refugio, y cada momento a tu lado una aventura que atesoro con cuidado infinito.
-          </p>
-          <p class="carta-text">
-            Que tus 28 años sean el inicio del capítulo más brillante de tu historia. 
-            Mereces todo lo que sueñas y mucho más de lo que imaginas.
-          </p>
-          <p class="carta-firma">Con todo mi amor ✦</p>
-        </div>
+      <span class="sep">:</span>
+      <div class="unit">
+        <div class="unit-box"><div class="unit-num" id="cd-hours">--</div></div>
+        <span class="unit-label">Horas</span>
       </div>
-    </div>
-  </section>
-
-  <!-- ===== DESEOS SECTION ===== -->
-  <section class="deseos" id="deseos">
-    <div class="section-inner">
-      <div class="label-tag">Mis deseos para ti</div>
-      <h2 class="section-title">28 Razones para Brillar</h2>
-      <p class="section-desc">Un deseo por cada año vivido, por cada sueño que aún te queda por cumplir</p>
-      <div class="deseos-grid" id="deseos-grid">
-        <!-- Generado por JS -->
+      <span class="sep">:</span>
+      <div class="unit">
+        <div class="unit-box"><div class="unit-num" id="cd-mins">--</div></div>
+        <span class="unit-label">Minutos</span>
+      </div>
+      <span class="sep">:</span>
+      <div class="unit">
+        <div class="unit-box"><div class="unit-num" id="cd-secs">--</div></div>
+        <span class="unit-label">Segundos</span>
       </div>
     </div>
-  </section>
 
-  <!-- ===== MOMENTOS SECTION ===== -->
-  <section class="momentos" id="momentos">
-    <div class="momentos-bg"></div>
-    <div class="section-inner">
-      <div class="label-tag light">Una mirada al alma</div>
-      <h2 class="section-title light">Lo que me enamora de ti</h2>
-      <div class="traits-container">
-        <div class="trait-item" style="--delay:0s">
-          <div class="trait-icon">🌸</div>
-          <h3>Tu sonrisa</h3>
-          <p>Que ilumina cualquier habitación antes de que tus palabras lleguen</p>
-        </div>
-        <div class="trait-item" style="--delay:0.1s">
-          <div class="trait-icon">✨</div>
-          <h3>Tu fortaleza</h3>
-          <p>La forma en que enfrentas cada tormenta y sales más bella que antes</p>
-        </div>
-        <div class="trait-item" style="--delay:0.2s">
-          <div class="trait-icon">🌿</div>
-          <h3>Tu bondad</h3>
-          <p>Esa ternura natural con la que tratas a todo lo que te rodea</p>
-        </div>
-        <div class="trait-item" style="--delay:0.3s">
-          <div class="trait-icon">🔥</div>
-          <h3>Tu pasión</h3>
-          <p>El fuego con el que persigues todo lo que te apasiona en la vida</p>
-        </div>
-        <div class="trait-item" style="--delay:0.4s">
-          <div class="trait-icon">🌙</div>
-          <h3>Tu misterio</h3>
-          <p>Cada día descubro algo nuevo en ti que me deja sin palabras</p>
-        </div>
-        <div class="trait-item" style="--delay:0.5s">
-          <div class="trait-icon">💫</div>
-          <h3>Tu esencia</h3>
-          <p>Esa forma única e irrepetible de ser tú, que no existe en ningún otro lugar</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    <p class="arrived-msg" id="arrivedMsg">
+      ¡El momento ha llegado! 🌸
+    </p>
 
-  <!-- ===== PROMESAS SECTION ===== -->
-  <section class="promesas" id="promesas">
-    <div class="section-inner">
-      <div class="label-tag">Mis promesas</div>
-      <h2 class="section-title">Lo que te prometo</h2>
-      <div class="promesas-list">
-        <div class="promesa-item">
-          <span class="promesa-num">01</span>
-          <p>Siempre estar ahí para escucharte, en los días de sol y en los de tormenta</p>
-        </div>
-        <div class="promesa-item">
-          <span class="promesa-num">02</span>
-          <p>Recordarte lo extraordinaria que eres, especialmente cuando tú lo olvides</p>
-        </div>
-        <div class="promesa-item">
-          <span class="promesa-num">03</span>
-          <p>Admirarte cada día un poco más y nunca dar tu presencia por sentada</p>
-        </div>
-        <div class="promesa-item">
-          <span class="promesa-num">04</span>
-          <p>Hacerte reír hasta que te duela el estómago, siempre que lo necesites</p>
-        </div>
-        <div class="promesa-item">
-          <span class="promesa-num">05</span>
-          <p>Acompañarte en cada sueño, cada aventura, cada página de tu historia</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    <p class="target-date">Hasta el <span>9 · Julio · 2026</span></p>
+  </div>
 
-  <!-- ===== MENSAJE FINAL ===== -->
-  <section class="final" id="final">
-    <div class="stars-container" id="stars"></div>
-    <div class="section-inner">
-      <div class="final-ornament">✦ ✦ ✦</div>
-      <h2 class="final-title">
-        Que este año sea<br/>
-        <em>tu año dorado</em>
-      </h2>
-      <p class="final-sub">
-        Que cada mañana despiertes sabiendo que eres amada,<br/>
-        que cada noche cierres los ojos con paz en el corazón.
-      </p>
-      <div class="candles" id="candles">
-        <!-- generado por JS -->
-      </div>
-      <p class="final-wish">Pide un deseo 🎂</p>
-    </div>
-  </section>
+  <p class="page-footer">algo especial se acerca &nbsp;✦</p>
 
-  <!-- ===== POEMA SAMANTHA ===== -->
-  <section class="poema" id="poema">
-    <div class="deco-ring ring-1"></div>
-    <div class="deco-ring ring-2"></div>
-    <div class="section-inner">
-      <div class="label-tag">Solo para ti</div>
-      <h2 class="section-title">Samantha</h2>
-      <div class="poema-wrapper">
-        <div class="poema-card">
-          <div class="poema-letra">S</div>
-          <div class="poema-versos">
+  <script>
+    // ── Partículas canvas ──
+    (function() {
+      const c = document.getElementById('canvas-bg');
+      const ctx = c.getContext('2d');
+      let W, H, pts = [];
+      function resize() { W = c.width = innerWidth; H = c.height = innerHeight; }
+      resize();
+      window.addEventListener('resize', resize);
+      const cols = ['#d4a5a5','#c9a96e','#f5e6e6','#f0dfc0','#b07878'];
+      for (let i = 0; i < 70; i++) pts.push({
+        x: Math.random()*1920, y: Math.random()*1080,
+        r: 1+Math.random()*2.5, dx:(Math.random()-.5)*.35, dy:(Math.random()-.5)*.35,
+        a: .15+Math.random()*.4, col: cols[Math.floor(Math.random()*cols.length)]
+      });
+      function draw() {
+        ctx.clearRect(0,0,W,H);
+        pts.forEach(p => {
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle=p.col; ctx.globalAlpha=p.a; ctx.fill();
+          p.x+=p.dx; p.y+=p.dy;
+          if(p.x<0||p.x>W) p.dx*=-1;
+          if(p.y<0||p.y>H) p.dy*=-1;
+        });
+        ctx.globalAlpha=1;
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
 
-            <div class="verso-bloque">
-              <span class="verso-inicial">S</span>
-              <span class="verso-resto">uave como el alba que no pide permiso,</span>
-            </div>
-            <div class="verso-bloque">
-              <span class="verso-inicial">A</span>
-              <span class="verso-resto">mor que se esconde en tu forma de reír,</span>
-            </div>
-            <div class="verso-bloque">
-              <span class="verso-inicial">M</span>
-              <span class="verso-resto">irada que guarda universos sin decir,</span>
-            </div>
-            <div class="verso-bloque">
-              <span class="verso-inicial">A</span>
-              <span class="verso-resto">lma que brilla con su propio paraíso,</span>
-            </div>
-            <div class="verso-bloque">
-              <span class="verso-inicial">N</span>
-              <span class="verso-resto">ombre que suena a canción sin improviso,</span>
-            </div>
-            <div class="verso-bloque">
-              <span class="verso-inicial">T</span>
-              <span class="verso-resto">ernura que sana todo lo que está por venir,</span>
-            </div>
-            <div class="verso-bloque">
-              <span class="verso-inicial">H</span>
-              <span class="verso-resto">oy el mundo te celebra por existir,</span>
-            </div>
-            <div class="verso-bloque">
-              <span class="verso-inicial">A</span>
-              <span class="verso-resto">sí, perfecta, exactamente como te quiso el destino.</span>
-            </div>
+    // ── Pétalos ──
+    (function() {
+      const emojis = ['🌸','🌺','✿','❀','🌷','💮'];
+      const cont = document.getElementById('petals');
+      function spawn() {
+        const el = document.createElement('span');
+        el.className = 'petal';
+        el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        el.style.left = Math.random()*100+'vw';
+        el.style.fontSize = (.7+Math.random()*1.1)+'rem';
+        const dur = 7+Math.random()*7;
+        el.style.animationDuration = dur+'s';
+        el.style.animationDelay = Math.random()*3+'s';
+        cont.appendChild(el);
+        setTimeout(()=>el.remove(),(dur+3)*1000);
+      }
+      for(let i=0;i<10;i++) setTimeout(spawn, i*400);
+      setInterval(spawn, 1100);
+    })();
 
-            <p class="poema-cierre">— Con amor, en cada verso ✦</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    // ── Transición al abrir cumple.html ──
+    function launchTransition() {
+      const overlay  = document.getElementById('transition-overlay');
+      const burst    = document.getElementById('petalBurst');
+      const emojis   = ['🌸','🌺','🌷','✨','💕','🎂','💫','🌟','❀','🎉'];
+      const count    = 22;
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <p>Hecho con <span class="heart">♥</span> para ti, con cada línea de código escrita pensando en tu sonrisa</p>
-    <p class="footer-sub">Happy Birthday · 28 · 2026</p>
-  </footer>
+      overlay.style.pointerEvents = 'all';
+      overlay.style.opacity = '1';
 
-  <script src="main.js"></script>
-</body>
-</html>
+      // Pétalos que explotan desde el centro
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('span');
+        el.className = 'burst-emoji';
+        el.textContent = emojis[i % emojis.length];
+        const angle = (i / count) * 360;
+        const dist  = 80 + Math.random() * 160;
+        const rad   = angle * Math.PI / 180;
+        el.style.setProperty('--tx', `${Math.cos(rad)*dist}px`);
+        el.style.setProperty('--ty', `${Math.sin(rad)*dist}px`);
+        el.style.animationDelay = (Math.random() * 0.3) + 's';
+        el.style.fontSize = (1.2 + Math.random() * 1.4) + 'rem';
+        burst.appendChild(el);
+      }
+
+      // Redirigir tras la animación completa
+      setTimeout(() => {
+        window.location.href = 'cumple.html';
+      }, 2600);
+    }
+
+    // ── Countdown ──
+    // ⚠️ TEST: TARGET a 5 minutos desde ahora
+    // Para producción: reemplazar por → new Date('2026-07-09T00:00:00')
+    const TARGET = new Date(Date.now() + 5 * 60 * 1000);
+
+    function pad(n) { return String(n).padStart(2,'0'); }
+
+    function tick(id, val) {
+      const el = document.getElementById(id);
+      const newVal = pad(val);
+      if (el.textContent !== newVal) {
+        el.textContent = newVal;
+        el.classList.remove('tick');
+        void el.offsetWidth;
+        el.classList.add('tick');
+      }
+    }
+
+    let triggered = false;
+
+    function updateCountdown() {
+      const now  = new Date();
+      const diff = TARGET - now;
+
+      if (diff <= 0 && !triggered) {
+        triggered = true;
+        clearInterval(timer);
+        document.getElementById('countdownGrid').style.display = 'none';
+        const msg = document.getElementById('arrivedMsg');
+        msg.style.display = 'block';
+        setTimeout(launchTransition, 800);
+        return;
+      }
+
+      const days  = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins  = Math.floor((diff % 3600000) / 60000);
+      const secs  = Math.floor((diff % 60000) / 1000);
+
+      tick('cd-days',  days);
+      tick('cd-hours', hours);
+      tick('cd-mins',  mins);
+      tick('cd-secs',  secs);
+    }
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
+  </script>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feliz Cumpleaños ✨</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>"/>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- PARTÍCULAS DE FONDO -->
+  <canvas id="particles"></canvas>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero">
+    <div class="petals-container" id="petals"></div>
+    <div class="hero-content">
+      <div class="hero-badge reveal">28</div>
+      <h1 class="hero-title reveal">
+        <span class="italic-line">Feliz</span>
+        <span class="bold-line">Cumpleaños</span>
+      </h1>
+      <p class="hero-subtitle reveal">Para la mujer más especial de mi universo</p>
+      <div class="hero-divider reveal">
+        <span class="line"></span>
+        <span class="diamond">◆</span>
+        <span class="line"></span>
+      </div>
+      <p class="hero-date reveal">16 · Abril · 2026</p>
+    </div>
+    <div class="scroll-hint">
+      <span>Desplázate para descubrir</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ===== DEDICATORIA SECTION ===== -->
+  <section class="dedicatoria" id="dedicatoria">
+    <div class="deco-ring ring-1"></div>
+    <div class="deco-ring ring-2"></div>
+    <div class="section-inner">
+      <div class="label-tag">Para ti</div>
+      <h2 class="section-title">Una carta desde mi corazón</h2>
+      <div class="carta-wrapper">
+        <div class="carta">
+          <p class="carta-text">
+            Hay personas que llegan a tu vida como lo hace la luz del amanecer: suavemente, sin avisar, 
+            tiñendo de dorado todo lo que tocan. <em>Tú eres esa luz para mí.</em>
+          </p>
+          <p class="carta-text">
+            Hoy, en este día tan especial, quiero que sepas que cada sonrisa tuya ha sido un regalo, 
+            cada palabra tuya un refugio, y cada momento a tu lado una aventura que atesoro con cuidado infinito.
+          </p>
+          <p class="carta-text">
+            Que tus 28 años sean el inicio del capítulo más brillante de tu historia. 
+            Mereces todo lo que sueñas y mucho más de lo que imaginas.
+          </p>
+          <p class="carta-firma">Con todo mi amor ✦</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DESEOS SECTION ===== -->
+  <section class="deseos" id="deseos">
+    <div class="section-inner">
+      <div class="label-tag">Mis deseos para ti</div>
+      <h2 class="section-title">28 Razones para Brillar</h2>
+      <p class="section-desc">Un deseo por cada año vivido, por cada sueño que aún te queda por cumplir</p>
+      <div class="deseos-grid" id="deseos-grid">
+        <!-- Generado por JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MOMENTOS SECTION ===== -->
+  <section class="momentos" id="momentos">
+    <div class="momentos-bg"></div>
+    <div class="section-inner">
+      <div class="label-tag light">Una mirada al alma</div>
+      <h2 class="section-title light">Lo que me enamora de ti</h2>
+      <div class="traits-container">
+        <div class="trait-item" style="--delay:0s">
+          <div class="trait-icon">🌸</div>
+          <h3>Tu sonrisa</h3>
+          <p>Que ilumina cualquier habitación antes de que tus palabras lleguen</p>
+        </div>
+        <div class="trait-item" style="--delay:0.1s">
+          <div class="trait-icon">✨</div>
+          <h3>Tu fortaleza</h3>
+          <p>La forma en que enfrentas cada tormenta y sales más bella que antes</p>
+        </div>
+        <div class="trait-item" style="--delay:0.2s">
+          <div class="trait-icon">🌿</div>
+          <h3>Tu bondad</h3>
+          <p>Esa ternura natural con la que tratas a todo lo que te rodea</p>
+        </div>
+        <div class="trait-item" style="--delay:0.3s">
+          <div class="trait-icon">🔥</div>
+          <h3>Tu pasión</h3>
+          <p>El fuego con el que persigues todo lo que te apasiona en la vida</p>
+        </div>
+        <div class="trait-item" style="--delay:0.4s">
+          <div class="trait-icon">🌙</div>
+          <h3>Tu misterio</h3>
+          <p>Cada día descubro algo nuevo en ti que me deja sin palabras</p>
+        </div>
+        <div class="trait-item" style="--delay:0.5s">
+          <div class="trait-icon">💫</div>
+          <h3>Tu esencia</h3>
+          <p>Esa forma única e irrepetible de ser tú, que no existe en ningún otro lugar</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROMESAS SECTION ===== -->
+  <section class="promesas" id="promesas">
+    <div class="section-inner">
+      <div class="label-tag">Mis promesas</div>
+      <h2 class="section-title">Lo que te prometo</h2>
+      <div class="promesas-list">
+        <div class="promesa-item">
+          <span class="promesa-num">01</span>
+          <p>Siempre estar ahí para escucharte, en los días de sol y en los de tormenta</p>
+        </div>
+        <div class="promesa-item">
+          <span class="promesa-num">02</span>
+          <p>Recordarte lo extraordinaria que eres, especialmente cuando tú lo olvides</p>
+        </div>
+        <div class="promesa-item">
+          <span class="promesa-num">03</span>
+          <p>Admirarte cada día un poco más y nunca dar tu presencia por sentada</p>
+        </div>
+        <div class="promesa-item">
+          <span class="promesa-num">04</span>
+          <p>Hacerte reír hasta que te duela el estómago, siempre que lo necesites</p>
+        </div>
+        <div class="promesa-item">
+          <span class="promesa-num">05</span>
+          <p>Acompañarte en cada sueño, cada aventura, cada página de tu historia</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MENSAJE FINAL ===== -->
+  <section class="final" id="final">
+    <div class="stars-container" id="stars"></div>
+    <div class="section-inner">
+      <div class="final-ornament">✦ ✦ ✦</div>
+      <h2 class="final-title">
+        Que este año sea<br/>
+        <em>tu año dorado</em>
+      </h2>
+      <p class="final-sub">
+        Que cada mañana despiertes sabiendo que eres amada,<br/>
+        que cada noche cierres los ojos con paz en el corazón.
+      </p>
+      <div class="candles" id="candles">
+        <!-- generado por JS -->
+      </div>
+      <p class="final-wish">Pide un deseo 🎂</p>
+    </div>
+  </section>
+
+  <!-- ===== POEMA SAMANTHA ===== -->
+  <section class="poema" id="poema">
+    <div class="deco-ring ring-1"></div>
+    <div class="deco-ring ring-2"></div>
+    <div class="section-inner">
+      <div class="label-tag">Solo para ti</div>
+      <h2 class="section-title">Samantha</h2>
+      <div class="poema-wrapper">
+        <div class="poema-card">
+          <div class="poema-letra">S</div>
+          <div class="poema-versos">
+
+            <div class="verso-bloque">
+              <span class="verso-inicial">S</span>
+              <span class="verso-resto">uave como el alba que no pide permiso,</span>
+            </div>
+            <div class="verso-bloque">
+              <span class="verso-inicial">A</span>
+              <span class="verso-resto">mor que se esconde en tu forma de reír,</span>
+            </div>
+            <div class="verso-bloque">
+              <span class="verso-inicial">M</span>
+              <span class="verso-resto">irada que guarda universos sin decir,</span>
+            </div>
+            <div class="verso-bloque">
+              <span class="verso-inicial">A</span>
+              <span class="verso-resto">lma que brilla con su propio paraíso,</span>
+            </div>
+            <div class="verso-bloque">
+              <span class="verso-inicial">N</span>
+              <span class="verso-resto">ombre que suena a canción sin improviso,</span>
+            </div>
+            <div class="verso-bloque">
+              <span class="verso-inicial">T</span>
+              <span class="verso-resto">ernura que sana todo lo que está por venir,</span>
+            </div>
+            <div class="verso-bloque">
+              <span class="verso-inicial">H</span>
+              <span class="verso-resto">oy el mundo te celebra por existir,</span>
+            </div>
+            <div class="verso-bloque">
+              <span class="verso-inicial">A</span>
+              <span class="verso-resto">sí, perfecta, exactamente como te quiso el destino.</span>
+            </div>
+
+            <p class="poema-cierre">— Con amor, en cada verso ✦</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Hecho con <span class="heart">♥</span> para ti, con cada línea de código escrita pensando en tu sonrisa</p>
+    <p class="footer-sub">Happy Birthday · 28 · 2026</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
