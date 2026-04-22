@@ -82,154 +82,13 @@
       50%      { transform: translate(18px,-18px); }
     }
 
-    /* ── Overlay de transición delicada ── */
-    #transition-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Pétalos flotantes que caen suavemente al inicio */
-    #transition-overlay .soft-petals {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-    .soft-petal {
-      position: absolute;
-      top: -40px;
-      opacity: 0;
-      animation: softDrift ease-in-out forwards;
-    }
-    @keyframes softDrift {
-      0%   { transform: translateY(0) translateX(0) rotate(0deg);   opacity: 0; }
-      15%  { opacity: 0.9; }
-      85%  { opacity: 0.6; }
-      100% { transform: translateY(105vh) translateX(var(--sx)) rotate(var(--sr)); opacity: 0; }
-    }
-
-    /* Velo que se abre desde el centro como una cortina */
-    #transition-overlay .veil-left,
-    #transition-overlay .veil-right {
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 50%;
-      background: linear-gradient(160deg, #fdf6f0, #fdf0f5 60%, #f5ece0);
-      opacity: 0;
-      transition: none;
-    }
-    #transition-overlay .veil-left  { left: 0;   transform-origin: left center; }
-    #transition-overlay .veil-right { right: 0;  transform-origin: right center; }
-
-    #transition-overlay .veil-left.open {
-      animation: veilSlideIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    #transition-overlay .veil-right.open {
-      animation: veilSlideIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    @keyframes veilSlideIn {
-      0%   { opacity: 0; transform: scaleX(0); }
-      10%  { opacity: 1; }
-      100% { opacity: 1; transform: scaleX(1); }
-    }
-
-    /* Texto centrado sobre el velo */
-    #transition-overlay .veil-text {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      opacity: 0;
-      pointer-events: none;
-    }
-    #transition-overlay .veil-text.show {
-      animation: gentleFadeIn 1.2s ease forwards;
-    }
-    @keyframes gentleFadeIn {
-      0%   { opacity: 0; transform: translateY(12px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    .veil-text .vt-line1 {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: clamp(1.4rem, 4.5vw, 2.2rem);
-      color: var(--rose-deep);
-      letter-spacing: 0.02em;
-    }
-    .veil-text .vt-divider {
-      width: 50px; height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-    }
-    .veil-text .vt-line2 {
-      font-family: 'Lato', sans-serif;
-      font-weight: 300;
-      font-size: 0.68rem;
-      letter-spacing: 0.38em;
-      text-transform: uppercase;
-      color: var(--text-soft);
-    }
-    .veil-text .vt-icon {
-      font-size: 1.6rem;
-      animation: iconFloat 2s ease-in-out infinite;
-    }
-    @keyframes iconFloat {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-6px); }
-    }
-
-    /* Mensaje "¡Llegó tu día!" — dentro del .center, reemplaza el contador */
-    .arrived-msg {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .arrived-msg.show {
-      display: flex;
-    }
-    .arrived-line1 {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: clamp(1.5rem, 5vw, 2.2rem);
-      color: var(--rose-deep);
-      opacity: 0;
-      animation: riseIn 1.1s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
-    }
-    .arrived-line2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
-      color: var(--text-soft);
-      letter-spacing: 0.08em;
-      opacity: 0;
-      animation: riseIn 1.1s cubic-bezier(0.16,1,0.3,1) 0.45s forwards;
-    }
-    .arrived-icon {
-      font-size: 1.8rem;
-      opacity: 0;
-      animation: riseIn 1s ease 0.7s forwards, iconFloat 2.5s ease 1.7s infinite;
-    }
-    @keyframes riseIn {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
     /* ── Contenido central ── */
     .center {
       position: relative;
       z-index: 2;
       text-align: center;
-      padding: 1.2rem 1.5rem;
+      padding: 2rem;
       max-width: 680px;
-      width: 100%;
     }
 
     /* Ornamento superior */
@@ -237,7 +96,7 @@
       font-size: 0.7rem;
       letter-spacing: 0.5rem;
       color: var(--gold);
-      margin-bottom: 1.4rem;
+      margin-bottom: 2.5rem;
       animation: fadeUp 1s ease 0.3s both;
     }
 
@@ -245,13 +104,16 @@
     .intro-text {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-size: clamp(1.1rem, 2.8vw, 1.45rem);
       color: var(--text-mid);
-      line-height: 1.75;
-      margin-bottom: 1.6rem;
+      line-height: 1.85;
+      margin-bottom: 3rem;
       animation: fadeUp 1s ease 0.6s both;
     }
-    .intro-text em { color: var(--rose-deep); }
+    .intro-text em {
+      color: var(--rose-deep);
+      font-style: italic;
+    }
 
     /* Divider */
     .divider {
@@ -259,36 +121,36 @@
       align-items: center;
       justify-content: center;
       gap: 1rem;
-      margin-bottom: 1.6rem;
+      margin-bottom: 3rem;
       animation: fadeUp 1s ease 0.9s both;
     }
-    .divider .line { display:block; width:55px; height:1px; background:var(--gold); }
+    .divider .line { display:block; width:70px; height:1px; background:var(--gold); }
     .divider .gem  { color:var(--gold); font-size:0.55rem; }
 
     /* Contador */
     .countdown-grid {
       display: flex;
       justify-content: center;
-      gap: clamp(0.4rem, 2vw, 1rem);
-      margin-bottom: 1.5rem;
+      gap: clamp(0.8rem, 3vw, 2rem);
+      margin-bottom: 2.5rem;
       animation: fadeUp 1s ease 1s both;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
     }
 
     .unit {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.4rem;
     }
 
     .unit-box {
       background: white;
       border: 1px solid rgba(212,165,165,0.4);
-      border-radius: 10px;
-      padding: 0.55rem 0.6rem;
-      min-width: clamp(54px, 18vw, 80px);
-      box-shadow: 0 6px 20px rgba(180,120,100,0.1);
+      border-radius: 14px;
+      padding: clamp(0.8rem, 2vw, 1.2rem) clamp(1rem, 2.5vw, 1.6rem);
+      min-width: clamp(70px, 14vw, 100px);
+      box-shadow: 0 8px 32px rgba(180,120,100,0.1);
       position: relative;
       overflow: hidden;
     }
@@ -301,24 +163,25 @@
 
     .unit-num {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 5.5vw, 2.6rem);
+      font-size: clamp(2rem, 5vw, 3.2rem);
       font-weight: 700;
       color: var(--text-dark);
       line-height: 1;
       position: relative;
       z-index: 1;
+      transition: transform 0.2s ease;
     }
     .unit-num.tick {
       animation: numTick 0.25s cubic-bezier(0.175,0.885,0.32,1.275);
     }
     @keyframes numTick {
-      0%   { transform: translateY(-6px); opacity: 0.4; }
+      0%   { transform: translateY(-8px); opacity: 0.4; }
       100% { transform: translateY(0);    opacity: 1; }
     }
 
     .unit-label {
-      font-size: 0.58rem;
-      letter-spacing: 0.18em;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--text-soft);
     }
@@ -326,10 +189,10 @@
     /* Separador : */
     .sep {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-size: 2.5rem;
       color: var(--rose);
       align-self: flex-start;
-      padding-top: 0.5rem;
+      padding-top: clamp(0.8rem, 2vw, 1.1rem);
       animation: sepPulse 1s ease-in-out infinite;
     }
     @keyframes sepPulse {
@@ -340,23 +203,24 @@
     /* Fecha destino */
     .target-date {
       font-family: 'Lato', sans-serif;
-      font-size: 0.68rem;
-      letter-spacing: 0.28em;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--text-soft);
       animation: fadeUp 1s ease 1.2s both;
     }
-    .target-date span { color: var(--rose-deep); }
+    .target-date span {
+      color: var(--rose-deep);
+    }
 
     /* Mensaje cuando llega el día */
     .arrived-msg {
       display: none;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       font-style: italic;
       color: var(--rose-deep);
       animation: fadeUp 0.8s ease both;
-      margin-bottom: 1rem;
     }
 
     @keyframes fadeUp {
@@ -367,21 +231,13 @@
     /* Footer mínimo */
     .page-footer {
       position: fixed;
-      bottom: 1rem;
+      bottom: 1.5rem;
       left: 0; right: 0;
       text-align: center;
-      font-size: 0.62rem;
+      font-size: 0.65rem;
       letter-spacing: 0.2em;
       color: var(--text-soft);
       z-index: 2;
-    }
-
-    /* ── Responsive celular ── */
-    @media (max-height: 700px) {
-      .ornament      { margin-bottom: 0.8rem; }
-      .intro-text    { margin-bottom: 1rem; font-size: 0.95rem; line-height: 1.6; }
-      .divider       { margin-bottom: 1rem; }
-      .countdown-grid{ margin-bottom: 1rem; }
     }
   </style>
 </head>
@@ -391,19 +247,6 @@
   <div id="petals"></div>
   <div class="ring ring-a"></div>
   <div class="ring ring-b"></div>
-
-  <!-- Overlay de transición delicada -->
-  <div id="transition-overlay">
-    <div class="soft-petals" id="softPetals"></div>
-    <div class="veil-left"  id="veilLeft"></div>
-    <div class="veil-right" id="veilRight"></div>
-    <div class="veil-text"  id="veilText">
-      <span class="vt-icon">🌸</span>
-      <p class="vt-line1">¡Llegó tu día, Samantha!</p>
-      <div class="vt-divider"></div>
-      <p class="vt-line2">abriendo tu regalo</p>
-    </div>
-  </div>
 
   <div class="center">
     <p class="ornament">✦ &nbsp; &nbsp; ✦ &nbsp; &nbsp; ✦</p>
@@ -443,11 +286,9 @@
       </div>
     </div>
 
-    <div class="arrived-msg" id="arrivedMsg">
-      <span class="arrived-icon">🌸</span>
-      <p class="arrived-line1">¡Llegó tu día, Samantha!</p>
-      <p class="arrived-line2">un momento… tu sorpresa se está abriendo</p>
-    </div>
+    <p class="arrived-msg" id="arrivedMsg">
+      ¡El momento ha llegado! Abriendo tu sorpresa… 🌸
+    </p>
 
     <p class="target-date">Hasta el <span>9 · Julio · 2026</span></p>
   </div>
@@ -504,53 +345,8 @@
       setInterval(spawn, 1100);
     })();
 
-    // ── Transición delicada ──
-    function launchTransition() {
-      const overlay   = document.getElementById('transition-overlay');
-      const petals    = document.getElementById('softPetals');
-      const veilL     = document.getElementById('veilLeft');
-      const veilR     = document.getElementById('veilRight');
-      const veilText  = document.getElementById('veilText');
-      const emojis    = ['🌸','🌺','🌷','❀','💮','✿'];
-
-      overlay.style.pointerEvents = 'all';
-
-      // 1. Pétalos caen suavemente desde arriba (escalonados)
-      for (let i = 0; i < 18; i++) {
-        const el = document.createElement('span');
-        el.className = 'soft-petal';
-        el.textContent = emojis[i % emojis.length];
-        el.style.left = (Math.random() * 100) + 'vw';
-        el.style.fontSize = (0.9 + Math.random() * 1.1) + 'rem';
-        const dur = 2.8 + Math.random() * 2.2;
-        el.style.animationDuration = dur + 's';
-        el.style.animationDelay = (i * 0.12) + 's';
-        el.style.setProperty('--sx', (Math.random() * 60 - 30) + 'px');
-        el.style.setProperty('--sr', (Math.random() * 360) + 'deg');
-        petals.appendChild(el);
-      }
-
-      // 2. Velo entra desde los lados (como cortina) — tras 0.6s
-      setTimeout(() => {
-        veilL.classList.add('open');
-        veilR.classList.add('open');
-      }, 600);
-
-      // 3. Texto aparece suavemente sobre el velo — tras 1.8s
-      setTimeout(() => {
-        veilText.classList.add('show');
-      }, 1800);
-
-      // 4. Redirigir a cumple.html — tras 4s
-      setTimeout(() => {
-        window.location.href = 'cumple.html';
-      }, 4000);
-    }
-
     // ── Countdown ──
-    // ⚠️ TEST: TARGET a 5 minutos desde ahora
-    // Para producción: reemplazar por → new Date('2026-07-09T00:00:00')
-    const TARGET = new Date(Date.now() + 5 * 60 * 1000);
+    const TARGET = new Date('2026-07-09T00:00:00');
 
     function pad(n) { return String(n).padStart(2,'0'); }
 
@@ -560,39 +356,23 @@
       if (el.textContent !== newVal) {
         el.textContent = newVal;
         el.classList.remove('tick');
-        void el.offsetWidth;
+        void el.offsetWidth; // reflow
         el.classList.add('tick');
       }
     }
-
-    let triggered = false;
 
     function updateCountdown() {
       const now  = new Date();
       const diff = TARGET - now;
 
-      if (diff <= 0 && !triggered) {
-        triggered = true;
-        clearInterval(timer);
-
-        // Contador se desvanece suavemente
-        const grid = document.getElementById('countdownGrid');
-        const date = document.querySelector('.target-date');
-        grid.style.transition = 'opacity 1.2s ease, transform 1.2s ease';
-        grid.style.opacity    = '0';
-        grid.style.transform  = 'translateY(-10px)';
-        if (date) { date.style.transition = 'opacity 0.8s ease'; date.style.opacity = '0'; }
-
-        // Mensaje aparece con suavidad tras el fade del contador
+      if (diff <= 0) {
+        // ¡Llegó el día! Mostrar mensaje y redirigir
+        document.getElementById('countdownGrid').style.display = 'none';
+        const msg = document.getElementById('arrivedMsg');
+        msg.style.display = 'block';
         setTimeout(() => {
-          grid.style.display = 'none';
-          if (date) date.style.display = 'none';
-          const msg = document.getElementById('arrivedMsg');
-          msg.classList.add('show');
-          // Lanzar transición de pantalla tras leer el mensaje
-          setTimeout(launchTransition, 2200);
-        }, 1000);
-
+          window.location.href = 'index.html';
+        }, 2800);
         return;
       }
 
@@ -608,5 +388,7 @@
     }
 
     updateCountdown();
-    const timer = setInterval(updateCountdown, 1000);
+    setInterval(updateCountdown, 1000);
   </script>
+</body>
+</html>
